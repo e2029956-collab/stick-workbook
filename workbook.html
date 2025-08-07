@@ -1,0 +1,1801 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stick Episode 1 Workbook - Interactive Tasks</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --accent: #e74c3c;
+            --light: #ecf0f1;
+            --dark: #2c3e50;
+            --success: #2ecc71;
+            --warning: #f39c12;
+            --correct: #d4edda;
+            --incorrect: #f8d7da;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Roboto', sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            color: var(--dark);
+            line-height: 1.6;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            padding: 40px 30px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        header::before {
+            content: "";
+            position: absolute;
+            top: -50px;
+            right: -50px;
+            width: 200px;
+            height: 200px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+        }
+        
+        header::after {
+            content: "";
+            position: absolute;
+            bottom: -70px;
+            left: -70px;
+            width: 250px;
+            height: 250px;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 50%;
+        }
+        
+        h1 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2.8rem;
+            margin-bottom: 10px;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 2;
+        }
+        
+        /* Стили для вкладок */
+        .tabs {
+            display: flex;
+            background: #f8f9fa;
+            border-bottom: 3px solid var(--secondary);
+            overflow-x: auto;
+        }
+        
+        .tab {
+            padding: 15px 25px;
+            cursor: pointer;
+            background: transparent;
+            border: none;
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--dark);
+            transition: all 0.3s;
+            white-space: nowrap;
+            border-bottom: 3px solid transparent;
+            margin-bottom: -3px;
+        }
+        
+        .tab:hover {
+            background: #e9ecef;
+        }
+        
+        .tab.active {
+            color: var(--secondary);
+            border-bottom-color: var(--secondary);
+            background: white;
+        }
+        
+        .tab-content {
+            display: none;
+            padding: 30px;
+            animation: fadeIn 0.5s;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .section {
+            margin-bottom: 30px;
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.03);
+            border-left: 5px solid var(--secondary);
+        }
+        
+        .section-title {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.8rem;
+            color: var(--primary);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .section-title i {
+            margin-right: 15px;
+            color: var(--secondary);
+        }
+        
+        .task {
+            margin-bottom: 25px;
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+        
+        .task-title {
+            font-weight: 600;
+            color: var(--secondary);
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+        }
+        
+        .question {
+            margin-bottom: 15px;
+            font-weight: 500;
+        }
+        
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin: 15px 0;
+        }
+        
+        .option {
+            display: flex;
+            align-items: center;
+            padding: 10px 15px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .option:hover {
+            background: #f8f9fa;
+        }
+        
+        .option input {
+            margin-right: 10px;
+        }
+        
+        .matching-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        
+        .matching-table th, 
+        .matching-table td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .matching-table th {
+            background: var(--primary);
+            color: white;
+        }
+        
+        .matching-table tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+        
+        input[type="text"], 
+        textarea, 
+        select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 1rem;
+            margin-bottom: 15px;
+            transition: all 0.3s;
+        }
+        
+        input[type="text"]:focus, 
+        textarea:focus, 
+        select:focus {
+            outline: none;
+            border-color: var(--secondary);
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+        }
+        
+        textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+        
+        .btn {
+            display: inline-block;
+            background: var(--secondary);
+            color: white;
+            padding: 12px 25px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            transition: all 0.3s;
+            margin: 10px 5px;
+            font-size: 1rem;
+        }
+        
+        .btn:hover {
+            background: #2980b9;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.3);
+        }
+        
+        .btn-success {
+            background: var(--success);
+        }
+        
+        .btn-success:hover {
+            background: #27ae60;
+            box-shadow: 0 5px 15px rgba(46, 204, 113, 0.3);
+        }
+        
+        .btn-warning {
+            background: var(--warning);
+        }
+        
+        .btn-warning:hover {
+            background: #d35400;
+            box-shadow: 0 5px 15px rgba(243, 156, 18, 0.3);
+        }
+        
+        .feedback {
+            margin-top: 15px;
+            padding: 15px;
+            border-radius: 6px;
+            display: none;
+        }
+        
+        .feedback.correct {
+            background: var(--correct);
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .feedback.incorrect {
+            background: var(--incorrect);
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        
+        .answer-key {
+            margin-top: 20px;
+            padding: 15px;
+            background: #e9ecef;
+            border-radius: 6px;
+            border-left: 4px solid var(--secondary);
+            display: none;
+        }
+        
+        .answer-key h4 {
+            margin-bottom: 10px;
+            color: var(--primary);
+        }
+        
+        .correct-answer {
+            background-color: var(--correct);
+            color: #155724;
+        }
+        
+        .incorrect-answer {
+            background-color: var(--incorrect);
+            color: #721c24;
+        }
+        
+        /* Стили для игры Мемори */
+        .memory-game-container {
+            font-family: 'Montserrat', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            margin: 20px auto;
+            padding: 30px;
+            max-width: 950px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .memory-game-container .memory-title {
+            color: #3498db;
+            font-size: 32px;
+            font-weight: bold;
+            margin: 0 0 20px 0;
+            text-align: center;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
+        }
+        
+        .memory-game-container #memory-status {
+            margin-top: 20px;
+            font-size: 20px;
+            color: #2c3e50;
+            font-weight: 500;
+        }
+        
+        .memory-game-container #memory-game {
+            margin-top: 20px;
+            max-width: 900px;
+            width: 100%;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+        
+        .memory-game-container .card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            cursor: pointer;
+            user-select: none;
+            padding: 15px;
+            height: 120px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            font-size: 14px;
+            position: relative;
+            transition: transform 0.3s ease;
+            perspective: 600px;
+        }
+        
+        .memory-game-container .card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.5s;
+            transform-style: preserve-3d;
+        }
+        
+        .memory-game-container .card.flipped .card-inner {
+            transform: rotateY(180deg);
+        }
+        
+        .memory-game-container .card-front, 
+        .memory-game-container .card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 12px;
+            backface-visibility: hidden;
+            padding: 10px;
+            box-sizing: border-box;
+            overflow: hidden;
+        }
+        
+        .memory-game-container .card-front {
+            background: #3498db;
+            color: white;
+            display: flex; 
+            justify-content: center; 
+            align-items: center;
+            font-weight: bold;
+            font-size: 26px;
+        }
+        
+        .memory-game-container .card-back {
+            background: #fff;
+            color: #333;
+            transform: rotateY(180deg);
+            font-size: 14px;
+            line-height: 1.2;
+            overflow-y: auto;
+        }
+        
+        .memory-game-container #memory-restartBtn, 
+        .memory-game-container #memory-showAnswersBtn {
+            margin: 5px;
+            padding: 12px 24px;
+            font-size: 16px;
+            background: #3498db;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+        
+        .memory-game-container #memory-restartBtn:hover, 
+        .memory-game-container #memory-showAnswersBtn:hover {
+            background: #2980b9;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        .memory-game-container #memory-showAnswersBtn {
+            background: white;
+            color: #3498db;
+            border: 2px solid #3498db;
+        }
+        
+        .memory-game-container #memory-showAnswersBtn:hover {
+            background: #f8f9fa;
+            color: #2980b9;
+            border-color: #2980b9;
+        }
+        
+        .memory-game-container .card.revealed .card-inner {
+            transform: rotateY(180deg);
+        }
+        
+        .memory-game-container .card.matched {
+            background: #d4edda;
+            border: 2px solid #2ecc71;
+        }
+        
+        .memory-game-container .card.matched .card-front {
+            background: #2ecc71;
+        }
+        
+        /* Стили для Flashcards */
+        .flashcards-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .flashcard {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            height: 200px;
+            position: relative;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        
+        .flashcard:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+        
+        .flashcard-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+        }
+        
+        .flashcard.flipped .flashcard-inner {
+            transform: rotateY(180deg);
+        }
+        
+        .flashcard-front, .flashcard-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 12px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            text-align: center;
+            box-sizing: border-box;
+        }
+        
+        .flashcard-front {
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            color: white;
+            font-weight: 600;
+            font-size: 1.2rem;
+        }
+        
+        .flashcard-back {
+            background: linear-gradient(135deg, #2ecc71, #27ae60);
+            color: white;
+            transform: rotateY(180deg);
+            font-size: 1rem;
+        }
+        
+        .flashcard-controls {
+            text-align: center;
+            margin-top: 20px;
+        }
+        
+        /* Стили для уведомлений */
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 25px;
+            background: var(--success);
+            color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            z-index: 1000;
+            transform: translateX(150%);
+            transition: transform 0.3s ease;
+        }
+        
+        .notification.show {
+            transform: translateX(0);
+        }
+        
+        .notification.error {
+            background: var(--accent);
+        }
+        
+        /* Стили для кнопки отправки */
+        .submit-section {
+            text-align: center;
+            padding: 30px;
+            background: #f8f9fa;
+            border-top: 1px solid #e9ecef;
+            margin-top: 30px;
+        }
+        
+        .submit-btn {
+            background: linear-gradient(135deg, var(--success), #27ae60);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(46, 204, 113, 0.3);
+        }
+        
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(46, 204, 113, 0.4);
+        }
+        
+        .submit-btn:active {
+            transform: translateY(1px);
+        }
+        
+        /* Стили для модального окна */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            animation: fadeIn 0.3s;
+        }
+        
+        .modal-content {
+            background-color: #fefefe;
+            margin: 10% auto;
+            padding: 30px;
+            border-radius: 15px;
+            width: 80%;
+            max-width: 600px;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.2);
+            animation: slideIn 0.3s;
+        }
+        
+        @keyframes slideIn {
+            from { transform: translateY(-50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+        
+        .close:hover {
+            color: var(--accent);
+        }
+        
+        .modal-title {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.8rem;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+        
+        .modal-body {
+            margin-bottom: 20px;
+        }
+        
+        .modal-footer {
+            text-align: right;
+        }
+        
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            .content {
+                padding: 20px;
+            }
+            
+            .section {
+                padding: 20px;
+            }
+            
+            .memory-game-container #memory-game {
+                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            }
+            
+            .flashcards-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .modal-content {
+                width: 95%;
+                margin: 15% auto;
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Stick Episode 1 Workbook</h1>
+            <div class="subtitle">Interactive Tasks with Answer Keys</div>
+        </header>
+        
+        <!-- Вкладки -->
+        <div class="tabs">
+            <button class="tab active" onclick="openTab(event, 'vocabulary')">
+                <i class="fas fa-book"></i> Vocabulary
+            </button>
+            <button class="tab" onclick="openTab(event, 'grammar')">
+                <i class="fas fa-language"></i> Grammar
+            </button>
+            <button class="tab" onclick="openTab(event, 'speaking')">
+                <i class="fas fa-comments"></i> Speaking & Usage
+            </button>
+            <button class="tab" onclick="openTab(event, 'memory')">
+                <i class="fas fa-gamepad"></i> Memory Game
+            </button>
+            <button class="tab" onclick="openTab(event, 'flashcards')">
+                <i class="fas fa-clone"></i> Flashcards
+            </button>
+        </div>
+        
+        <div class="content">
+            <!-- Вкладка Vocabulary -->
+            <div id="vocabulary" class="tab-content active">
+                <div class="section">
+                    <h2 class="section-title"><i class="fas fa-book"></i> Vocabulary Tasks</h2>
+                    
+                    <!-- Task A: Multiple Choice -->
+                    <div class="task">
+                        <div class="task-title">A. Multiple Choice — Choose the correct meaning</div>
+                        <div class="question">What does the phrase "wet my beak" mean?</div>
+                        <div class="options">
+                            <div class="option">
+                                <input type="radio" name="q1" id="q1a" value="a">
+                                <label for="q1a">a) To get an advance payment or a share of profits</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q1" id="q1b" value="b">
+                                <label for="q1b">b) To perform very well under pressure</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q1" id="q1c" value="c">
+                                <label for="q1c">c) To think carefully about a decision</label>
+                            </div>
+                        </div>
+                        <button class="btn" onclick="checkAnswer('q1', 'a')">Check Answer</button>
+                        <div id="feedback-q1" class="feedback"></div>
+                    </div>
+                    
+                    <!-- Task B: Matching Idioms -->
+                    <div class="task">
+                        <div class="task-title">B. Matching Idioms and Definitions</div>
+                        <p>Match the expressions in Column A with their meanings in Column B:</p>
+                        <table class="matching-table">
+                            <tr>
+                                <th>Column A</th>
+                                <th>Column B</th>
+                            </tr>
+                            <tr>
+                                <td>1. Wet my beak</td>
+                                <td>
+                                    <select id="match1">
+                                        <option value="">Select meaning</option>
+                                        <option value="a">a) To get an advance or a share of money</option>
+                                        <option value="b">b) Slightly overweight or bulky</option>
+                                        <option value="c">c) Someone once successful but no longer is</option>
+                                        <option value="d">d) To fail due to pressure or nervousness</option>
+                                        <option value="e">e) To think carefully before making a decision</option>
+                                        <option value="f">f) To recover after difficulties</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>2. Chunky</td>
+                                <td>
+                                    <select id="match2">
+                                        <option value="">Select meaning</option>
+                                        <option value="a">a) To get an advance or a share of money</option>
+                                        <option value="b">b) Slightly overweight or bulky</option>
+                                        <option value="c">c) Someone once successful but no longer is</option>
+                                        <option value="d">d) To fail due to pressure or nervousness</option>
+                                        <option value="e">e) To think carefully before making a decision</option>
+                                        <option value="f">f) To recover after difficulties</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>3. Never-was / Has-been</td>
+                                <td>
+                                    <select id="match3">
+                                        <option value="">Select meaning</option>
+                                        <option value="a">a) To get an advance or a share of money</option>
+                                        <option value="b">b) Slightly overweight or bulky</option>
+                                        <option value="c">c) Someone once successful but no longer is</option>
+                                        <option value="d">d) To fail due to pressure or nervousness</option>
+                                        <option value="e">e) To think carefully before making a decision</option>
+                                        <option value="f">f) To recover after difficulties</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>4. To choke</td>
+                                <td>
+                                    <select id="match4">
+                                        <option value="">Select meaning</option>
+                                        <option value="a">a) To get an advance or a share of money</option>
+                                        <option value="b">b) Slightly overweight or bulky</option>
+                                        <option value="c">c) Someone once successful but no longer is</option>
+                                        <option value="d">d) To fail due to pressure or nervousness</option>
+                                        <option value="e">e) To think carefully before making a decision</option>
+                                        <option value="f">f) To recover after difficulties</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>5. Mull it over</td>
+                                <td>
+                                    <select id="match5">
+                                        <option value="">Select meaning</option>
+                                        <option value="a">a) To get an advance or a share of money</option>
+                                        <option value="b">b) Slightly overweight or bulky</option>
+                                        <option value="c">c) Someone once successful but no longer is</option>
+                                        <option value="d">d) To fail due to pressure or nervousness</option>
+                                        <option value="e">e) To think carefully before making a decision</option>
+                                        <option value="f">f) To recover after difficulties</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>6. Get back on your feet</td>
+                                <td>
+                                    <select id="match6">
+                                        <option value="">Select meaning</option>
+                                        <option value="a">a) To get an advance or a share of money</option>
+                                        <option value="b">b) Slightly overweight or bulky</option>
+                                        <option value="c">c) Someone once successful but no longer is</option>
+                                        <option value="d">d) To fail due to pressure or nervousness</option>
+                                        <option value="e">e) To think carefully before making a decision</option>
+                                        <option value="f">f) To recover after difficulties</option>
+                                    </select>
+                                </td>
+                            </tr>
+                        </table>
+                        <button class="btn" onclick="checkMatching()">Check Answers</button>
+                        <div id="matching-feedback" class="feedback"></div>
+                    </div>
+                    
+                    <!-- Task C: Fill in the blanks -->
+                    <div class="task">
+                        <div class="task-title">C. Fill in the blanks</div>
+                        <p>Use words from: wet my beak, choke, chunky, mull it over, has-been</p>
+                        
+                        <div class="question">1. After his meltdown on live TV, Pryce was considered a ________.</div>
+                        <input type="text" id="blank1" placeholder="Your answer...">
+                        
+                        <div class="question">2. Some athletes ________ under pressure and miss their chance.</div>
+                        <input type="text" id="blank2" placeholder="Your answer...">
+                        
+                        <div class="question">3. I will ________ the proposal before giving an answer.</div>
+                        <input type="text" id="blank3" placeholder="Your answer...">
+                        
+                        <div class="question">4. He's a bit ________ but still plays well.</div>
+                        <input type="text" id="blank4" placeholder="Your answer...">
+                        
+                        <div class="question">5. Many see him as a ________ of the sport.</div>
+                        <input type="text" id="blank5" placeholder="Your answer...">
+                        
+                        <button class="btn" onclick="checkBlanks()">Check Answers</button>
+                        <div id="blanks-feedback" class="feedback"></div>
+                    </div>
+                    
+                    <!-- Task D: Write sentences -->
+                    <div class="task">
+                        <div class="task-title">D. Write sentences</div>
+                        <p>Create your own sentences using the idioms from the vocabulary list.</p>
+                        
+                        <div class="question">1. Write a sentence using "choke":</div>
+                        <textarea id="sentence1" placeholder="Your sentence..."></textarea>
+                        
+                        <div class="question">2. Write a sentence using "mull it over":</div>
+                        <textarea id="sentence2" placeholder="Your sentence..."></textarea>
+                        
+                        <div class="question">3. Write a sentence using "has-been":</div>
+                        <textarea id="sentence3" placeholder="Your sentence..."></textarea>
+                        
+                        <button class="btn" onclick="showExampleSentences()">Show Example Sentences</button>
+                        <div id="sentences-example" class="answer-key">
+                            <h4>Example Sentences:</h4>
+                            <p>1. He really choked during the final match and lost his chance.</p>
+                            <p>2. I need time to mull it over before making a decision.</p>
+                            <p>3. The player was called a has-been after retiring early.</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Task E: Explanation Activity -->
+                    <div class="task">
+                        <div class="task-title">E. Explanation Activity</div>
+                        <p>Choose 2 idioms from the list and explain their meanings in your own words in English.</p>
+                        
+                        <div class="question">1. Idiom explanation:</div>
+                        <textarea id="explanation1" placeholder="Your explanation..."></textarea>
+                        
+                        <div class="question">2. Idiom explanation:</div>
+                        <textarea id="explanation2" placeholder="Your explanation..."></textarea>
+                        
+                        <button class="btn" onclick="showExampleExplanations()">Show Example Explanations</button>
+                        <div id="explanations-example" class="answer-key">
+                            <h4>Example Explanations:</h4>
+                            <p>1. Wet my beak means to receive money early, often as a part of profits before the full amount is paid.</p>
+                            <p>2. Chunky describes someone who is slightly overweight or has a solid body shape.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Вкладка Grammar -->
+            <div id="grammar" class="tab-content">
+                <div class="section">
+                    <h2 class="section-title"><i class="fas fa-language"></i> Grammar Tasks</h2>
+                    
+                    <!-- Task A: Fill in the blanks -->
+                    <div class="task">
+                        <div class="task-title">A. Fill in the blanks (Past Simple or Present Perfect)</div>
+                        <p>Complete the sentences with the correct verb form:</p>
+                        
+                        <div class="question">1. Pryce _______ (stop) playing professional golf after his breakdown.</div>
+                        <input type="text" id="grammar1" placeholder="Your answer...">
+                        
+                        <div class="question">2. They _______ (not decide) if Santi will participate yet.</div>
+                        <input type="text" id="grammar2" placeholder="Your answer...">
+                        
+                        <div class="question">3. Santi's mother _______ (be) worried for a long time.</div>
+                        <input type="text" id="grammar3" placeholder="Your answer...">
+                        
+                        <div class="question">4. Pryce _______ (try) coaching young players before.</div>
+                        <input type="text" id="grammar4" placeholder="Your answer...">
+                        
+                        <div class="question">5. Santi _______ (win) several amateur tournaments before quitting.</div>
+                        <input type="text" id="grammar5" placeholder="Your answer...">
+                        
+                        <button class="btn" onclick="checkGrammar()">Check Answers</button>
+                        <div id="grammar-feedback" class="feedback"></div>
+                    </div>
+                    
+                    <!-- Task B: Correct the mistakes -->
+                    <div class="task">
+                        <div class="task-title">B. Correct the mistakes</div>
+                        <p>Identify and correct the errors:</p>
+                        
+                        <div class="question">1. Pryce has lived in the house <u>since</u> two years.</div>
+                        <input type="text" id="correction1" placeholder="Corrected sentence...">
+                        
+                        <div class="question">2. Santi didn't <u>played</u> golf for a long time.</div>
+                        <input type="text" id="correction2" placeholder="Corrected sentence...">
+                        
+                        <div class="question">3. Amber-Linn <u>has sold</u> the house already?</div>
+                        <input type="text" id="correction3" placeholder="Corrected sentence...">
+                        
+                        <div class="question">4. They <u>was</u> hoping to get an advance today.</div>
+                        <input type="text" id="correction4" placeholder="Corrected sentence...">
+                        
+                        <div class="question">5. We <u>are agree</u> about the deal last week.</div>
+                        <input type="text" id="correction5" placeholder="Corrected sentence...">
+                        
+                        <button class="btn" onclick="checkCorrections()">Check Answers</button>
+                        <div id="corrections-feedback" class="feedback"></div>
+                    </div>
+                    
+                    <!-- Task C: Direct to Indirect Speech -->
+                    <div class="task">
+                        <div class="task-title">C. Direct to Indirect Speech</div>
+                        <p>Rewrite the sentences in indirect speech:</p>
+                        
+                        <div class="question">1. Pryce said, "I can't wait to start coaching Santi."</div>
+                        <textarea id="speech1" placeholder="Indirect speech..."></textarea>
+                        
+                        <div class="question">2. Amber-Linn told Pryce, "You must sign the property transfer."</div>
+                        <textarea id="speech2" placeholder="Indirect speech..."></textarea>
+                        
+                        <div class="question">3. The manager asked, "Do you have time to meet today?"</div>
+                        <textarea id="speech3" placeholder="Indirect speech..."></textarea>
+                        
+                        <div class="question">4. Santi said, "I'm not interested in playing anymore."</div>
+                        <textarea id="speech4" placeholder="Indirect speech..."></textarea>
+                        
+                        <div class="question">5. The lawyer said, "This property transfer is final."</div>
+                        <textarea id="speech5" placeholder="Indirect speech..."></textarea>
+                        
+                        <button class="btn" onclick="showSpeechAnswers()">Show Answer Key</button>
+                        <div id="speech-answers" class="answer-key">
+                            <h4>Answer Key:</h4>
+                            <p>1. Pryce said that he couldn't wait to start coaching Santi.</p>
+                            <p>2. Amber-Linn told Pryce that he had to sign the property transfer.</p>
+                            <p>3. The manager asked if he had time to meet that day.</p>
+                            <p>4. Santi said he was not interested in playing anymore.</p>
+                            <p>5. The lawyer said that the property transfer was final.</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Task D: Form questions -->
+                    <div class="task">
+                        <div class="task-title">D. Form questions</div>
+                        <p>Write questions corresponding to these answers:</p>
+                        
+                        <div class="question">1. Pryce met Santi at the golf course.</div>
+                        <input type="text" id="question1" placeholder="Your question...">
+                        
+                        <div class="question">2. Because Santi's dad was his coach.</div>
+                        <input type="text" id="question2" placeholder="Your question...">
+                        
+                        <div class="question">3. She wants Pryce to move on from his past.</div>
+                        <input type="text" id="question3" placeholder="Your question...">
+                        
+                        <div class="question">4. They agreed to share winnings 70-30.</div>
+                        <input type="text" id="question4" placeholder="Your question...">
+                        
+                        <div class="question">5. The PXG Proto club costs twelve hundred dollars.</div>
+                        <input type="text" id="question5" placeholder="Your question...">
+                        
+                        <button class="btn" onclick="showQuestionsAnswers()">Show Answer Key</button>
+                        <div id="questions-answers" class="answer-key">
+                            <h4>Answer Key:</h4>
+                            <p>1. Where did Pryce meet Santi?</p>
+                            <p>2. Why did Santi stop playing golf?</p>
+                            <p>3. What does Amber-Linn want Pryce to do?</p>
+                            <p>4. How did they agree to split the winnings?</p>
+                            <p>5. How much does the PXG Proto club cost?</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Вкладка Speaking & Usage -->
+            <div id="speaking" class="tab-content">
+                <div class="section">
+                    <h2 class="section-title"><i class="fas fa-comments"></i> Speaking & Usage Tasks</h2>
+                    
+                    <!-- Task A: Role-play -->
+                    <div class="task">
+                        <div class="task-title">A. Role-play (in pairs)</div>
+                        <p>Scenario: Pryce tries to convince Santi's mother to let him coach Santi. Use at least 3 idioms from the vocabulary list and 2 grammar constructions (Present Perfect or Past Simple).</p>
+                        <p>Prompt: You are Pryce and Santi's mother; discuss Santi's future and concerns.</p>
+                        <div class="answer-key">
+                            <h4>Example Role-play:</h4>
+                            <p><strong>Pryce:</strong> I understand your concerns, but I have been coaching young players for years. Santi has a special talent that we can't ignore.</p>
+                            <p><strong>Mother:</strong> I need to mull it over. He choked under pressure before and I don't want him to go through that again.</p>
+                            <p><strong>Pryce:</strong> I get back on my feet after my own breakdown, and I can help him do the same. He's not a has-been, he's just beginning.</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Task B: Character Descriptions -->
+                    <div class="task">
+                        <div class="task-title">B. Character Descriptions</div>
+                        <p>Describe Pryce, Santi, or Amber-Linn in 5-6 sentences using vocabulary from the book. Include physical description, personality traits, and their situation.</p>
+                        <textarea id="character-desc" placeholder="Your character description..."></textarea>
+                        <button class="btn" onclick="showCharacterExample()">Show Example</button>
+                        <div id="character-example" class="answer-key">
+                            <h4>Example:</h4>
+                            <p>Pryce is a middle-aged man with a chunky build but strong hands. He used to be a professional golfer but is now considered a has-been after his public breakdown. He has been trying to get back on his feet by coaching young talent. Pryce is persuasive and determined, but sometimes he chokes under pressure when discussing his past failures. He wants to wet his beak with Santi's potential winnings.</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Task C: Discussion Questions -->
+                    <div class="task">
+                        <div class="task-title">C. Discussion Questions</div>
+                        <div class="options">
+                            <div class="question">1. Which idioms or expressions from the episode did you find interesting and why?</div>
+                            <textarea id="discussion1" placeholder="Your thoughts..."></textarea>
+                            
+                            <div class="question">2. What do you think about Pryce's decision to coach Santi?</div>
+                            <textarea id="discussion2" placeholder="Your thoughts..."></textarea>
+                            
+                            <div class="question">3. Have you ever had a second chance like Santi? How did it feel?</div>
+                            <textarea id="discussion3" placeholder="Your thoughts..."></textarea>
+                        </div>
+                    </div>
+                    
+                    <!-- Task D: Retelling -->
+                    <div class="task">
+                        <div class="task-title">D. Retelling</div>
+                        <p>Tell briefly (2-3 minutes) the story of Pryce meeting Santi and offering to coach him using at least 5 idioms from the vocabulary list.</p>
+                        <textarea id="retelling" placeholder="Your retelling..."></textarea>
+                        <button class="btn" onclick="showRetellingExample()">Show Example</button>
+                        <div id="retelling-example" class="answer-key">
+                            <h4>Example:</h4>
+                            <p>Pryce, a former golfer now considered a has-been, met Santi at a golf course. Santi was chunky but had a natural talent for golf. Pryce wanted to wet his beak with Santi's potential future winnings, so he offered to coach him. Santi's mother was concerned because he had choked under pressure in the past. She needed to mull it over before making a decision. Pryce convinced her that he could help Santi get back on his feet and succeed.</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Task E: Creative Writing -->
+                    <div class="task">
+                        <div class="task-title">E. Creative Writing</div>
+                        <p>Write an alternative ending to episode 1 (around 80 words) imagining what would happen if Santi refused Pryce's offer. Use at least 3 idioms and correct grammar structures.</p>
+                        <textarea id="creative" placeholder="Your alternative ending..."></textarea>
+                        <button class="btn" onclick="showCreativeExample()">Show Example</button>
+                        <div id="creative-example" class="answer-key">
+                            <h4>Example:</h4>
+                            <p>Santi refused Pryce's offer, explaining that he had choked under pressure before and didn't want to be a has-been like Pryce. His mother supported his decision, saying they needed to mull it over more carefully. Pryce was disappointed but understood. Santi decided to focus on his job and get back on his feet on his own terms. He didn't want to wet his beak with someone else's dreams.</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Кнопка отправки только на этой вкладке -->
+                    <div class="submit-section">
+                        <button class="submit-btn" onclick="openSubmitModal()">
+                            <i class="fas fa-paper-plane"></i> Submit Creative Tasks
+                        </button>
+                        <p style="margin-top: 15px; color: #6c757d;">Click to submit your creative tasks for review</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Вкладка Memory Game -->
+            <div id="memory" class="tab-content">
+                <div class="section">
+                    <h2 class="section-title"><i class="fas fa-gamepad"></i> Memory Game: Match Idioms with Definitions</h2>
+                    <p>Match the English idioms with their English definitions. Click on the cards to flip them.</p>
+                    
+                    <div class="memory-game-container">
+                        <h1 class="memory-title">Memory: English Idioms from Stick</h1>
+                        <div id="memory-status">Открыто пар: 0 из 12</div>
+                        <div style="margin-top: 15px;">
+                            <button id="memory-restartBtn" onclick="memoryResetGame()">Начать заново</button>
+                            <button id="memory-showAnswersBtn" onclick="memoryShowAnswers()">Показать ответы</button>
+                        </div>
+                        <div id="memory-game"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Вкладка Flashcards -->
+            <div id="flashcards" class="tab-content">
+                <div class="section">
+                    <h2 class="section-title"><i class="fas fa-clone"></i> Interactive Flashcards</h2>
+                    <p>Click on each card to flip it and see the definition. Practice these idioms from the episode!</p>
+                    
+                    <div class="flashcards-container" id="flashcards-container">
+                        <!-- Карточки будут добавлены через JavaScript -->
+                    </div>
+                    
+                    <div class="flashcard-controls">
+                        <button class="btn" onclick="flipAllCards()">Flip All Cards</button>
+                        <button class="btn btn-success" onclick="resetAllCards()">Reset All Cards</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <footer>
+            <p>© 2023 Stick Episode 1 Workbook | Created for English learning through TV series</p>
+        </footer>
+    </div>
+    
+    <!-- Модальное окно для отправки -->
+    <div id="submitModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeSubmitModal()">&times;</span>
+            <h2 class="modal-title">Submit Your Creative Tasks</h2>
+            <div class="modal-body">
+                <p>You are about to submit the following creative tasks:</p>
+                <ul id="submitList">
+                    <li>Character Description</li>
+                    <li>Discussion Questions</li>
+                    <li>Retelling</li>
+                    <li>Creative Writing</li>
+                </ul>
+                <p>These will be sent to your instructor for review.</p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-success" onclick="submitCreativeTasks()">Submit</button>
+                <button class="btn" onclick="closeSubmitModal()">Cancel</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Уведомление -->
+    <div id="notification" class="notification"></div>
+    
+    <script>
+        // Данные для карточек
+        const flashcardsData = [
+            {
+                term: "wet my beak",
+                definition: "to get an advance payment or a share of profits"
+            },
+            {
+                term: "chunky",
+                definition: "slightly overweight or bulky"
+            },
+            {
+                term: "never-was / has-been",
+                definition: "someone who was once successful but no longer is"
+            },
+            {
+                term: "to choke",
+                definition: "to fail due to pressure or nervousness"
+            },
+            {
+                term: "mull it over",
+                definition: "to think carefully before making a decision"
+            },
+            {
+                term: "get back on your feet",
+                definition: "to recover after difficulties"
+            },
+            {
+                term: "handle it",
+                definition: "to manage or deal with something"
+            },
+            {
+                term: "put a little extra cash in your pocket",
+                definition: "to earn some extra money"
+            },
+            {
+                term: "to hose one",
+                definition: "to completely miss or fail at something"
+            },
+            {
+                term: "ring someone up",
+                definition: "to process a payment for someone at a store"
+            },
+            {
+                term: "spoil someone",
+                definition: "to treat someone kindly or give many gifts"
+            },
+            {
+                term: "take a mental health time-out",
+                definition: "to take a break for mental well-being"
+            }
+        ];
+        
+        // Данные для игры Мемори
+        const memoryPairsData = [
+            {
+                question: "wet my beak",
+                answer: "to get an advance payment or a share of profits"
+            },
+            {
+                question: "chunky",
+                answer: "slightly overweight or bulky"
+            },
+            {
+                question: "never-was / has-been",
+                answer: "someone who was once successful but no longer is"
+            },
+            {
+                question: "to choke",
+                answer: "to fail due to pressure or nervousness"
+            },
+            {
+                question: "mull it over",
+                answer: "to think carefully before making a decision"
+            },
+            {
+                question: "get back on your feet",
+                answer: "to recover after difficulties"
+            },
+            {
+                question: "handle it",
+                answer: "to manage or deal with something"
+            },
+            {
+                question: "put a little extra cash in your pocket",
+                answer: "to earn some extra money"
+            },
+            {
+                question: "to hose one",
+                answer: "to completely miss or fail at something"
+            },
+            {
+                question: "ring someone up",
+                answer: "to process a payment for someone at a store"
+            },
+            {
+                question: "spoil someone",
+                answer: "to treat someone kindly or give many gifts"
+            },
+            {
+                question: "take a mental health time-out",
+                answer: "to take a break for mental well-being"
+            }
+        ];
+        
+        // Функции для вкладок
+        function openTab(evt, tabName) {
+            var i, tabcontent, tabs;
+            tabcontent = document.getElementsByClassName("tab-content");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].classList.remove("active");
+            }
+            tabs = document.getElementsByClassName("tab");
+            for (i = 0; i < tabs.length; i++) {
+                tabs[i].classList.remove("active");
+            }
+            document.getElementById(tabName).classList.add("active");
+            evt.currentTarget.classList.add("active");
+        }
+        
+        // Функции для воркбука
+        function checkAnswer(questionId, correctAnswer) {
+            const selectedOption = document.querySelector(`input[name="${questionId}"]:checked`);
+            const feedback = document.getElementById(`feedback-${questionId}`);
+            
+            if (!selectedOption) {
+                feedback.textContent = "Please select an answer.";
+                feedback.className = "feedback incorrect";
+                feedback.style.display = "block";
+                return;
+            }
+            
+            if (selectedOption.value === correctAnswer) {
+                feedback.textContent = "Correct! Well done.";
+                feedback.className = "feedback correct";
+            } else {
+                feedback.textContent = "Incorrect. The correct answer is " + correctAnswer + ".";
+                feedback.className = "feedback incorrect";
+            }
+            
+            feedback.style.display = "block";
+        }
+        
+        function checkMatching() {
+            const correctAnswers = {
+                match1: "a",
+                match2: "b",
+                match3: "c",
+                match4: "d",
+                match5: "e",
+                match6: "f"
+            };
+            
+            let allCorrect = true;
+            const feedback = document.getElementById("matching-feedback");
+            let feedbackText = "";
+            
+            for (let i = 1; i <= 6; i++) {
+                const selectedValue = document.getElementById(`match${i}`).value;
+                const selectElement = document.getElementById(`match${i}`);
+                
+                if (selectedValue === correctAnswers[`match${i}`]) {
+                    selectElement.classList.add("correct-answer");
+                    selectElement.classList.remove("incorrect-answer");
+                } else {
+                    selectElement.classList.add("incorrect-answer");
+                    selectElement.classList.remove("correct-answer");
+                    allCorrect = false;
+                    feedbackText += `Question ${i} is incorrect. `;
+                }
+            }
+            
+            if (allCorrect) {
+                feedback.textContent = "All answers are correct! Well done.";
+                feedback.className = "feedback correct";
+            } else {
+                feedback.textContent = feedbackText;
+                feedback.className = "feedback incorrect";
+            }
+            
+            feedback.style.display = "block";
+        }
+        
+        function checkBlanks() {
+            const correctAnswers = {
+                blank1: "has-been",
+                blank2: "choke",
+                blank3: "mull it over",
+                blank4: "chunky",
+                blank5: "has-been"
+            };
+            
+            let allCorrect = true;
+            const feedback = document.getElementById("blanks-feedback");
+            let feedbackText = "";
+            
+            for (let i = 1; i <= 5; i++) {
+                const userAnswer = document.getElementById(`blank${i}`).value.trim().toLowerCase();
+                const inputElement = document.getElementById(`blank${i}`);
+                const correctAnswer = correctAnswers[`blank${i}`].toLowerCase();
+                
+                if (userAnswer === correctAnswer) {
+                    inputElement.classList.add("correct-answer");
+                    inputElement.classList.remove("incorrect-answer");
+                } else {
+                    inputElement.classList.add("incorrect-answer");
+                    inputElement.classList.remove("correct-answer");
+                    allCorrect = false;
+                    feedbackText += `Question ${i} is incorrect. `;
+                }
+            }
+            
+            if (allCorrect) {
+                feedback.textContent = "All answers are correct! Well done.";
+                feedback.className = "feedback correct";
+            } else {
+                feedback.textContent = feedbackText;
+                feedback.className = "feedback incorrect";
+            }
+            
+            feedback.style.display = "block";
+        }
+        
+        function showExampleSentences() {
+            const exampleDiv = document.getElementById("sentences-example");
+            exampleDiv.style.display = exampleDiv.style.display === "block" ? "none" : "block";
+        }
+        
+        function showExampleExplanations() {
+            const exampleDiv = document.getElementById("explanations-example");
+            exampleDiv.style.display = exampleDiv.style.display === "block" ? "none" : "block";
+        }
+        
+        function checkGrammar() {
+            const correctAnswers = {
+                grammar1: "stopped",
+                grammar2: "haven't decided",
+                grammar3: "has been",
+                grammar4: "has tried",
+                grammar5: "has won"
+            };
+            
+            let allCorrect = true;
+            const feedback = document.getElementById("grammar-feedback");
+            let feedbackText = "";
+            
+            for (let i = 1; i <= 5; i++) {
+                const userAnswer = document.getElementById(`grammar${i}`).value.trim().toLowerCase();
+                const inputElement = document.getElementById(`grammar${i}`);
+                const correctAnswer = correctAnswers[`grammar${i}`].toLowerCase();
+                
+                const alternativeAnswers = {
+                    grammar2: ["haven't decided", "have not decided"],
+                    grammar4: ["has tried", "had tried"]
+                };
+                
+                let isCorrect = false;
+                if (alternativeAnswers[`grammar${i}`]) {
+                    isCorrect = alternativeAnswers[`grammar${i}`].includes(userAnswer);
+                } else {
+                    isCorrect = userAnswer === correctAnswer;
+                }
+                
+                if (isCorrect) {
+                    inputElement.classList.add("correct-answer");
+                    inputElement.classList.remove("incorrect-answer");
+                } else {
+                    inputElement.classList.add("incorrect-answer");
+                    inputElement.classList.remove("correct-answer");
+                    allCorrect = false;
+                    feedbackText += `Question ${i} is incorrect. `;
+                }
+            }
+            
+            if (allCorrect) {
+                feedback.textContent = "All answers are correct! Well done.";
+                feedback.className = "feedback correct";
+            } else {
+                feedback.textContent = feedbackText;
+                feedback.className = "feedback incorrect";
+            }
+            
+            feedback.style.display = "block";
+        }
+        
+        function checkCorrections() {
+            const correctAnswers = {
+                correction1: "Pryce has lived in the house for two years.",
+                correction2: "Santi didn't play golf for a long time.",
+                correction3: "Has Amber-Linn sold the house already?",
+                correction4: "They were hoping to get an advance today.",
+                correction5: "We agreed about the deal last week."
+            };
+            
+            let allCorrect = true;
+            const feedback = document.getElementById("corrections-feedback");
+            let feedbackText = "";
+            
+            for (let i = 1; i <= 5; i++) {
+                const userAnswer = document.getElementById(`correction${i}`).value.trim();
+                const inputElement = document.getElementById(`correction${i}`);
+                const correctAnswer = correctAnswers[`correction${i}`];
+                
+                const normalizedUser = userAnswer.toLowerCase().replace(/\s+/g, ' ').trim();
+                const normalizedCorrect = correctAnswer.toLowerCase().replace(/\s+/g, ' ').trim();
+                
+                if (normalizedUser === normalizedCorrect) {
+                    inputElement.classList.add("correct-answer");
+                    inputElement.classList.remove("incorrect-answer");
+                } else {
+                    inputElement.classList.add("incorrect-answer");
+                    inputElement.classList.remove("correct-answer");
+                    allCorrect = false;
+                    feedbackText += `Question ${i} is incorrect. `;
+                }
+            }
+            
+            if (allCorrect) {
+                feedback.textContent = "All answers are correct! Well done.";
+                feedback.className = "feedback correct";
+            } else {
+                feedback.textContent = feedbackText;
+                feedback.className = "feedback incorrect";
+            }
+            
+            feedback.style.display = "block";
+        }
+        
+        function showSpeechAnswers() {
+            const answerDiv = document.getElementById("speech-answers");
+            answerDiv.style.display = answerDiv.style.display === "block" ? "none" : "block";
+        }
+        
+        function showQuestionsAnswers() {
+            const answerDiv = document.getElementById("questions-answers");
+            answerDiv.style.display = answerDiv.style.display === "block" ? "none" : "block";
+        }
+        
+        function showCharacterExample() {
+            const exampleDiv = document.getElementById("character-example");
+            exampleDiv.style.display = exampleDiv.style.display === "block" ? "none" : "block";
+        }
+        
+        function showRetellingExample() {
+            const exampleDiv = document.getElementById("retelling-example");
+            exampleDiv.style.display = exampleDiv.style.display === "block" ? "none" : "block";
+        }
+        
+        function showCreativeExample() {
+            const exampleDiv = document.getElementById("creative-example");
+            exampleDiv.style.display = exampleDiv.style.display === "block" ? "none" : "block";
+        }
+        
+        // Функции для игры Мемори
+        let memoryGameContainer, memoryStatusElem, memoryRestartBtn, memoryShowAnswersBtn;
+        let memoryCards = [];
+        let memoryIsShowingAnswers = false;
+        let memoryFlippedCards = [];
+        let memoryMatchedPairs = 0;
+        
+        function memoryResetGame() {
+            memoryMatchedPairs = 0;
+            memoryFlippedCards = [];
+            memoryIsShowingAnswers = false;
+            
+            memoryShowAnswersBtn.textContent = 'Показать ответы';
+            memoryShowAnswersBtn.style.background = 'white';
+            memoryShowAnswersBtn.style.color = '#3498db';
+            memoryShowAnswersBtn.style.border = '2px solid #3498db';
+            
+            memoryShuffle(memoryCards);
+            memoryGameContainer.innerHTML = '';
+            memoryCards.forEach((c, idx) => {
+                memoryGameContainer.appendChild(memoryCreateCardElement(c, idx));
+            });
+            memoryUpdateStatus();
+        }
+        
+        function memoryShowAnswers() {
+            memoryIsShowingAnswers = !memoryIsShowingAnswers;
+            const allCards = document.querySelectorAll('.memory-game-container .card');
+            
+            if (memoryIsShowingAnswers) {
+                allCards.forEach(card => {
+                    if (!card.classList.contains('matched')) {
+                        card.classList.add('revealed');
+                    }
+                });
+                memoryShowAnswersBtn.textContent = 'Скрыть ответы';
+                memoryShowAnswersBtn.style.background = '#e74c3c';
+                memoryShowAnswersBtn.style.color = 'white';
+                memoryShowAnswersBtn.style.border = '2px solid #e74c3c';
+            } else {
+                allCards.forEach(card => {
+                    if (!card.classList.contains('matched')) {
+                        card.classList.remove('revealed', 'flipped');
+                    }
+                });
+                memoryShowAnswersBtn.textContent = 'Показать ответы';
+                memoryShowAnswersBtn.style.background = 'white';
+                memoryShowAnswersBtn.style.color = '#3498db';
+                memoryShowAnswersBtn.style.border = '2px solid #3498db';
+                memoryFlippedCards = [];
+            }
+        }
+        
+        function memoryShuffle(array) {
+            for(let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+        }
+        
+        function memoryCreateCardElement(cardData, index) {
+            const card = document.createElement('div');
+            card.classList.add('card');
+            card.dataset.pairId = cardData.pairId;
+            card.dataset.type = cardData.type;
+            card.dataset.index = index;
+            card.innerHTML = `
+                <div class="card-inner">
+                    <div class="card-front">?</div>
+                    <div class="card-back">${cardData.content}</div>
+                </div>
+            `;
+            card.onclick = () => memoryOnCardClick(card);
+            return card;
+        }
+        
+        function memoryOnCardClick(card) {
+            if (memoryIsShowingAnswers) {
+                return;
+            }
+            
+            if (memoryFlippedCards.length === 2 || card.classList.contains('flipped') || card.classList.contains('matched') || card.classList.contains('revealed')) {
+                return;
+            }
+            card.classList.add('flipped');
+            memoryFlippedCards.push(card);
+            if (memoryFlippedCards.length === 2) {
+                memoryCheckMatch();
+            }
+        }
+        
+        function memoryCheckMatch() {
+            const [card1, card2] = memoryFlippedCards;
+            const samePair = card1.dataset.pairId === card2.dataset.pairId;
+            const differentType = card1.dataset.type !== card2.dataset.type;
+            if (samePair && differentType) {
+                card1.classList.add('matched');
+                card2.classList.add('matched');
+                memoryMatchedPairs++;
+                memoryUpdateStatus();
+                memoryFlippedCards = [];
+                if (memoryMatchedPairs === memoryPairsData.length) {
+                    setTimeout(() => {
+                        alert('Поздравляем! Вы нашли все пары идиом!');
+                    }, 500);
+                }
+            } else {
+                setTimeout(() => {
+                    card1.classList.remove('flipped');
+                    card2.classList.remove('flipped');
+                    memoryFlippedCards = [];
+                }, 1200);
+            }
+        }
+        
+        function memoryUpdateStatus() {
+            memoryStatusElem.textContent = `Открыто пар: ${memoryMatchedPairs} из ${memoryPairsData.length}`;
+        }
+        
+        function memoryInitGame() {
+            memoryGameContainer = document.getElementById('memory-game');
+            memoryStatusElem = document.getElementById('memory-status');
+            memoryRestartBtn = document.getElementById('memory-restartBtn');
+            memoryShowAnswersBtn = document.getElementById('memory-showAnswersBtn');
+            
+            memoryCards = [];
+            memoryPairsData.forEach((pair, idx) => {
+                memoryCards.push({type: 'question', content: pair.question, pairId: idx});
+                memoryCards.push({type: 'answer', content: pair.answer, pairId: idx});
+            });
+            memoryResetGame();
+        }
+        
+        // Функции для Flashcards
+        function createFlashcards() {
+            const container = document.getElementById('flashcards-container');
+            container.innerHTML = '';
+            
+            flashcardsData.forEach((card, index) => {
+                const flashcard = document.createElement('div');
+                flashcard.className = 'flashcard';
+                flashcard.innerHTML = `
+                    <div class="flashcard-inner">
+                        <div class="flashcard-front">
+                            ${card.term}
+                        </div>
+                        <div class="flashcard-back">
+                            ${card.definition}
+                        </div>
+                    </div>
+                `;
+                flashcard.onclick = () => flipCard(flashcard);
+                container.appendChild(flashcard);
+            });
+        }
+        
+        function flipCard(card) {
+            card.classList.toggle('flipped');
+        }
+        
+        function flipAllCards() {
+            const cards = document.querySelectorAll('.flashcard');
+            cards.forEach(card => {
+                card.classList.add('flipped');
+            });
+        }
+        
+        function resetAllCards() {
+            const cards = document.querySelectorAll('.flashcard');
+            cards.forEach(card => {
+                card.classList.remove('flipped');
+            });
+        }
+        
+        // Функции для модального окна отправки
+        function openSubmitModal() {
+            document.getElementById('submitModal').style.display = 'block';
+        }
+        
+        function closeSubmitModal() {
+            document.getElementById('submitModal').style.display = 'none';
+        }
+        
+        // Функция для показа уведомлений
+        function showNotification(message, isError = false) {
+            const notification = document.getElementById('notification');
+            notification.textContent = message;
+            notification.className = isError ? 'notification error show' : 'notification show';
+            
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 3000);
+        }
+        
+        // Функция для отправки творческих заданий
+        function submitCreativeTasks() {
+            // Собираем данные с творческих заданий
+            const characterDesc = document.getElementById('character-desc').value;
+            const discussion1 = document.getElementById('discussion1').value;
+            const discussion2 = document.getElementById('discussion2').value;
+            const discussion3 = document.getElementById('discussion3').value;
+            const retelling = document.getElementById('retelling').value;
+            const creative = document.getElementById('creative').value;
+            
+            // Проверяем, заполнены ли поля
+            if (!characterDesc && !discussion1 && !discussion2 && !discussion3 && !retelling && !creative) {
+                showNotification('Please complete at least one creative task before submitting.', true);
+                return;
+            }
+            
+            // Создаем содержимое письма
+            let emailContent = "Stick Episode 1 Workbook - Creative Tasks Submission\n\n";
+            
+            if (characterDesc) {
+                emailContent += "=== Character Description ===\n";
+                emailContent += characterDesc + "\n\n";
+            }
+            
+            if (discussion1 || discussion2 || discussion3) {
+                emailContent += "=== Discussion Questions ===\n";
+                if (discussion1) {
+                    emailContent += "1. Which idioms or expressions from the episode did you find interesting and why?\n";
+                    emailContent += discussion1 + "\n\n";
+                }
+                if (discussion2) {
+                    emailContent += "2. What do you think about Pryce's decision to coach Santi?\n";
+                    emailContent += discussion2 + "\n\n";
+                }
+                if (discussion3) {
+                    emailContent += "3. Have you ever had a second chance like Santi? How did it feel?\n";
+                    emailContent += discussion3 + "\n\n";
+                }
+            }
+            
+            if (retelling) {
+                emailContent += "=== Retelling ===\n";
+                emailContent += retelling + "\n\n";
+            }
+            
+            if (creative) {
+                emailContent += "=== Creative Writing ===\n";
+                emailContent += creative + "\n\n";
+            }
+            
+            emailContent += "Submitted on: " + new Date().toLocaleString();
+            
+            // Создаем ссылку mailto
+            const subject = encodeURIComponent("Stick Episode 1 Workbook - Creative Tasks Submission");
+            const body = encodeURIComponent(emailContent);
+            const mailtoLink = `mailto:e2029956@gmail.com?subject=${subject}&body=${body}`;
+            
+            // Открываем почтовый клиент
+            window.location.href = mailtoLink;
+            
+            // Закрываем модальное окно
+            closeSubmitModal();
+            
+            // Показываем уведомление
+            showNotification('Opening your email client to submit your creative tasks...');
+        }
+        
+        // Закрытие модального окна при клике вне его
+        window.onclick = function(event) {
+            const modal = document.getElementById('submitModal');
+            if (event.target === modal) {
+                closeSubmitModal();
+            }
+        }
+        
+        // Инициализация при загрузке страницы
+        document.addEventListener('DOMContentLoaded', function() {
+            memoryInitGame();
+            createFlashcards();
+        });
+    </script>
+</body>
+</html>
